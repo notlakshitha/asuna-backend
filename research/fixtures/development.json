@@ -1,0 +1,861 @@
+[
+  {
+    "id": "stable",
+    "category": "stable",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "s1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:s1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "temporary",
+    "category": "temporary",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "t1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:t1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "t2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "math",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-02T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:t2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          },
+          "validTo": "2026-01-03T12:00:00.000Z"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "math",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "math",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "scoped",
+    "category": "scope",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "c1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:c1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "c2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "math",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:c2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "math",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "coding",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "explicit-change",
+    "category": "update",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "u1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:u1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "u2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-03T12:00:00.000Z",
+          "validFrom": "2026-01-03T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:u2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          },
+          "supersedes": [
+            "u1"
+          ]
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-04T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true,
+          "knownAt": "2026-01-04T12:00:00.000Z"
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "delayed-past",
+    "category": "out-of-order",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "p1",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-03T12:00:00.000Z",
+          "validFrom": "2026-01-03T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:p1",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "p2",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-04T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:p2",
+            "text": "Synthetic declaration of explanation depth: concise"
+          },
+          "validTo": "2026-01-03T12:00:00.000Z"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-05T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true,
+          "knownAt": "2026-01-05T12:00:00.000Z"
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "urgent-conflict",
+    "category": "conflict",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "f1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:f1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "f2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-02T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:f2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ],
+        "clarification": {
+          "value": "detailed",
+          "observedAt": "2026-01-03T12:00:00.000Z",
+          "validFrom": "2026-01-03T12:00:00.000Z",
+          "text": "Synthetic user answer: detailed"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-04T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "browser-is-not-preference",
+    "category": "inference",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "b1",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "browser_observation",
+            "ref": "synthetic:b1",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.1,
+          "recurrence": 0.1,
+          "urgent": true
+        },
+        "acceptedValues": [
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "id": "low-impact-before-important",
+    "category": "budget",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "l1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "browser_observation",
+            "ref": "synthetic:l1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.1,
+          "recurrence": 0.1,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ],
+        "clarification": {
+          "value": "concise",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-02T12:00:00.000Z",
+          "text": "Synthetic user answer: concise"
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "l2",
+          "slot": "feedback_style",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-03T12:00:00.000Z",
+          "validFrom": "2026-01-03T12:00:00.000Z",
+          "source": {
+            "type": "browser_observation",
+            "ref": "synthetic:l2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "feedback_style",
+          "scope": "global",
+          "at": "2026-01-04T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ],
+        "clarification": {
+          "value": "detailed",
+          "observedAt": "2026-01-04T12:00:00.000Z",
+          "validFrom": "2026-01-04T12:00:00.000Z",
+          "text": "Synthetic user answer: detailed"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "feedback_style",
+          "scope": "global",
+          "at": "2026-01-05T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "deferred-reflection",
+    "category": "timing",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "d1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "browser_observation",
+            "ref": "synthetic:d1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": false
+        },
+        "acceptedValues": [
+          null
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true,
+          "phase": "reflection"
+        },
+        "acceptedValues": [
+          "detailed"
+        ],
+        "clarification": {
+          "value": "detailed",
+          "observedAt": "2026-01-03T12:00:00.000Z",
+          "validFrom": "2026-01-03T12:00:00.000Z",
+          "text": "Synthetic user answer: detailed"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-04T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "declined-question",
+    "category": "unanswered",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "n1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:n1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "n2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-02T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:n2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          null
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-04T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          null
+        ]
+      }
+    ]
+  },
+  {
+    "id": "missing-important",
+    "category": "missing",
+    "steps": [
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-01T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ],
+        "clarification": {
+          "value": "concise",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "text": "Synthetic user answer: concise"
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "future-plan",
+    "category": "future",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "v1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:v1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          },
+          "validTo": "2026-01-05T12:00:00.000Z"
+        }
+      },
+      {
+        "type": "observation",
+        "observation": {
+          "id": "v2",
+          "slot": "explanation_depth",
+          "value": "detailed",
+          "scope": "global",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-05T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:v2",
+            "text": "Synthetic declaration of explanation depth: detailed"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-03T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "concise"
+        ]
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-06T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "important-one-off",
+    "category": "priority-failure",
+    "steps": [
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-01T12:00:00.000Z",
+          "impact": 1,
+          "recurrence": 0.1,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ],
+        "clarification": {
+          "value": "detailed",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "text": "Synthetic user answer: detailed"
+        }
+      }
+    ]
+  },
+  {
+    "id": "misclassified-urgency",
+    "category": "timing-failure",
+    "steps": [
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-01T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": false
+        },
+        "acceptedValues": [
+          "concise"
+        ],
+        "clarification": {
+          "value": "concise",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "text": "Synthetic user answer: concise"
+        }
+      }
+    ]
+  },
+  {
+    "id": "incorrect-known-preference",
+    "category": "unobserved-change",
+    "steps": [
+      {
+        "type": "observation",
+        "observation": {
+          "id": "k1",
+          "slot": "explanation_depth",
+          "value": "concise",
+          "scope": "global",
+          "observedAt": "2026-01-01T12:00:00.000Z",
+          "validFrom": "2026-01-01T12:00:00.000Z",
+          "source": {
+            "type": "user_statement",
+            "ref": "synthetic:k1",
+            "text": "Synthetic declaration of explanation depth: concise"
+          }
+        }
+      },
+      {
+        "type": "query",
+        "query": {
+          "slot": "explanation_depth",
+          "scope": "global",
+          "at": "2026-01-02T12:00:00.000Z",
+          "impact": 0.9,
+          "recurrence": 0.9,
+          "urgent": true
+        },
+        "acceptedValues": [
+          "detailed"
+        ],
+        "clarification": {
+          "value": "detailed",
+          "observedAt": "2026-01-02T12:00:00.000Z",
+          "validFrom": "2026-01-02T12:00:00.000Z",
+          "text": "Synthetic user answer: detailed"
+        }
+      }
+    ]
+  }
+]

@@ -1,10 +1,11 @@
 import NodeCache from 'node-cache';
 import fs from 'fs';
 import path from 'path';
+import { dataDirectory } from './config.js';
 
 // File persistence
-const DATA_DIR = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
+const DATA_DIR = dataDirectory();
+if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 const STORE_FILE = path.join(DATA_DIR, 'store.json');
 
 export const store = new NodeCache({ stdTTL: 0 }); // No auto-expiry — data is persisted to disk
@@ -32,7 +33,7 @@ function saveStore() {
 }
 
 // Save periodically
-setInterval(saveStore, 60 * 1000); // Every minute
+setInterval(saveStore, 60 * 1000).unref(); // Every minute; don't hold test/CLI processes open
 
 export function getHistory(userId) {
   return store.get(`history:${userId}`) || [];

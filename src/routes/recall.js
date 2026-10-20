@@ -17,17 +17,19 @@ export const recallRoutes = Router();
  */
 recallRoutes.post('/recall', async (req, res) => {
   try {
-    const { query, topK = 5 } = req.body;
-    if (!query) return res.status(400).json({ error: 'Query required' });
+    const { query, topK = 5, userId = 'default' } = req.body;
+    if (typeof query !== 'string' || !query.trim()) return res.status(400).json({ error: 'Query required' });
+    if (typeof userId !== 'string' || !userId.trim()) return res.status(400).json({ error: 'userId required' });
+    if (!Number.isInteger(topK) || topK < 1 || topK > 100) return res.status(400).json({ error: 'topK must be an integer from 1 to 100' });
 
-    const vectorCount = getVectorCount();
+    const vectorCount = getVectorCount(userId);
     if (vectorCount === 0) {
       return res.json({ memories: [], count: 0 });
     }
 
     // Embed the query and search
     const queryVector = await createEmbedding(query);
-    const matches = searchMemories(queryVector, topK);
+    const matches = searchMemories(queryVector, topK, userId);
 
     // Only return memories with a reasonable similarity score (> 0.5)
     const relevant = matches
@@ -54,7 +56,7 @@ recallRoutes.post('/recall/extract', async (req, res) => {
     const userId = req.body.userId || 'default';
     const history = getHistory(userId);
     const todayStr = new Date().toISOString().split('T')[0];
-    const added = await extractAndEmbedMemories(history, todayStr);
+    const added = await extractAndEmbedMemories(history, todayStr, userId);
     res.json({ success: true, added });
   } catch (e) {
     res.status(500).json({ error: e.message });
