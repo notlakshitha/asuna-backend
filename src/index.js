@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config(); // MUST run before any imports that read process.env
+import 'dotenv/config';
 
 import express from 'express';
 import cors from 'cors';
@@ -11,9 +10,13 @@ import { magazineRoutes } from './routes/magazine.js';
 import { recallRoutes } from './routes/recall.js';
 import { setupCronJobs } from './cron.js';
 import { store } from './store.js';
+import path from 'node:path';
+import { researchMode, dataDirectory } from './config.js';
+import { MemoryLedger } from './research/memory.js';
+import { createResearchRouter } from './research/routes.js';
 
 // Setup periodic tasks
-setupCronJobs();
+if (!researchMode()) setupCronJobs();
 
 const app = express();
 const port = process.env.PORT || 3848;
@@ -47,6 +50,18 @@ app.use('/api', historyRoutes);
 app.use('/api', magazineRoutes);
 app.use('/api', recallRoutes);
 
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Asuna Backend running on http://0.0.0.0:${port}`);
+if (researchMode()) {
+  const ledger = new MemoryLedger({ filePath: path.join(dataDirectory(), 'research-ledger.json') });
+  app.use('/api/research', createResearchRouter({ ledger, token: process.env.RESEARCH_API_TOKEN }));
+}
+
+app.use((error, req, res, next) => {
+  if (res.headersSent) return next(error);
+  if (error.type === 'entity.parse.failed') return res.status(400).json({ error: 'Invalid JSON' });
+  console.error('Request failed:', error.message);
+  res.status(500).json({ error: 'Internal server error' });
+});
+
+const server = app.listen(port, '0.0.0.0', () => {
+  console.log(`Asuna Backend running on http://0.0.0.0:${server.address().port}`);
 });

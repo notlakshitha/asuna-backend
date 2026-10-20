@@ -1,5 +1,17 @@
 # Asuna Backend
 
+## Research development
+
+Asuna includes an evidence-preserving personal-memory ledger and an offline clarification-policy diagnostic. Start with [research/README.md](research/README.md) for reproducible commands and the protected researcher API, and [research/PROTOCOL.md](research/PROTOCOL.md) for the proposed study, related work, limitations, and remaining validation gates.
+
+```bash
+npm ci --ignore-scripts
+npm test
+npm run research:eval
+```
+
+The diagnostic needs no Gemini key and sends no messages. Its 15 synthetic development histories are regression fixtures, not evidence of research superiority. Set `ASUNA_RESEARCH_MODE=true` to disable cron/automatic notifications, isolate data, and enable the token-protected research API. Legacy manual AI endpoints still use Gemini. The existing mobile app continues using the original product APIs.
+
 The central Node.js/Express backend powering the Asuna AI companion ecosystem. It processes browser history from the Chrome extension, generates diary entries, analyzes interests, creates weekly magazines, and maintains a **Second Brain** vector store for semantic memory recall.
 
 ## Features
@@ -14,7 +26,7 @@ The central Node.js/Express backend powering the Asuna AI companion ecosystem. I
 
 ## Prerequisites
 
-- Node.js v18+
+- Node.js v20+
 - Google Gemini API Key ([get one free](https://makersuite.google.com/app/apikey))
 
 ## Setup

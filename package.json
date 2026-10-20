@@ -6,7 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "node --watch src/index.js"
+    "dev": "node --watch src/index.js",
+    "test": "node --test",
+    "research:fixtures": "node research/fixtures/build-development.js",
+    "research:eval": "node research/evaluate.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.21.0",

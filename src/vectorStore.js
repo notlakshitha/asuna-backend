@@ -1,86 +1,59 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
+import { randomUUID } from 'node:crypto';
+import { dataDirectory } from './config.js';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
-const VECTOR_FILE = path.join(DATA_DIR, 'vectors.json');
-
-// Memory cache for vectors
-let vectors = [];
-
-// Load on start
-try {
-  if (fs.existsSync(VECTOR_FILE)) {
-    vectors = JSON.parse(fs.readFileSync(VECTOR_FILE, 'utf8'));
-    console.log(`Loaded ${vectors.length} vectors from local store`);
-  }
-} catch (e) {
-  console.error('Failed to load vector store:', e);
-}
-
-// Function to calculate Cosine Similarity
-function cosineSimilarity(vecA, vecB) {
-  let dotProduct = 0;
-  let normA = 0;
-  let normB = 0;
-  for (let i = 0; i < vecA.length; i++) {
-    dotProduct += vecA[i] * vecB[i];
-    normA += vecA[i] * vecA[i];
-    normB += vecB[i] * vecB[i];
-  }
-  if (normA === 0 || normB === 0) return 0;
-  return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
-}
-
-// Save to disk
-function saveStore() {
-  try {
-    fs.writeFileSync(VECTOR_FILE, JSON.stringify(vectors));
-  } catch (e) {
-    console.error('Failed to save vector store:', e);
+function validateVector(vector) {
+  if (!Array.isArray(vector) || !vector.length || !vector.every(Number.isFinite)) {
+    throw new TypeError('Embedding must be a nonempty array of finite numbers');
   }
 }
 
-/**
- * Add a new embedded memory
- * @param {string} text - The raw text of the memory (e.g. "I learned about Neo4j graph databases today")
- * @param {number[]} embedding - The vector representing the text
- * @param {object} metadata - Things like date, type ('diary', 'history_cluster')
- */
-export function addMemory(text, embedding, metadata = {}) {
-  // Prevent exact duplicates
-  if (vectors.some(v => v.text === text)) return;
-
-  vectors.push({ id: Date.now().toString(), text, embedding, metadata });
-  saveStore();
+function cosineSimilarity(a, b) {
+  const dot = a.reduce((sum, x, i) => sum + x * b[i], 0);
+  const norm = Math.sqrt(a.reduce((sum, x) => sum + x * x, 0) * b.reduce((sum, x) => sum + x * x, 0));
+  return norm ? dot / norm : 0;
 }
 
-/**
- * Returns number of vectors
- */
-export function getVectorCount() {
-  return vectors.length;
+export function createVectorStore({ filePath } = {}) {
+  let vectors = [];
+  if (filePath && fs.existsSync(filePath)) {
+    vectors = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    if (!Array.isArray(vectors)) throw new Error('Invalid vector store');
+  }
+  // Existing untagged vectors belong to the original single-user namespace only.
+  const owner = vector => vector.metadata?.userId ?? 'default';
+  function save() {
+    if (!filePath) return;
+    fs.mkdirSync(path.dirname(filePath), { recursive: true });
+    fs.writeFileSync(`${filePath}.tmp`, JSON.stringify(vectors));
+    fs.renameSync(`${filePath}.tmp`, filePath);
+  }
+  return {
+    addMemory(text, embedding, metadata = {}) {
+      validateVector(embedding);
+      if (typeof text !== 'string' || !text.trim()) throw new TypeError('Memory text required');
+      const userId = metadata.userId ?? 'default';
+      if (typeof userId !== 'string' || !userId.trim()) throw new TypeError('userId must be a nonempty string');
+      if (vectors.some(v => owner(v) === userId && v.text === text)) return false;
+      vectors.push({ id: randomUUID(), text, embedding: [...embedding], metadata: { ...metadata, userId } });
+      save();
+      return true;
+    },
+    getVectorCount(userId = 'default') { return vectors.filter(v => owner(v) === userId).length; },
+    searchMemories(queryEmbedding, topK = 5, userId = 'default') {
+      validateVector(queryEmbedding);
+      if (!Number.isInteger(topK) || topK < 1 || topK > 100) throw new TypeError('topK must be an integer from 1 to 100');
+      return vectors.filter(v => owner(v) === userId && Array.isArray(v.embedding) && v.embedding.length === queryEmbedding.length && v.embedding.every(Number.isFinite))
+        .map(v => ({ id: v.id, text: v.text, metadata: structuredClone(v.metadata), score: cosineSimilarity(queryEmbedding, v.embedding) }))
+        .sort((a, b) => b.score - a.score).slice(0, topK);
+    },
+  };
 }
 
-/**
- * Find top N similar memories to a given query embedding
- */
-export function searchMemories(queryEmbedding, topK = 5) {
-  if (vectors.length === 0) return [];
-
-  const results = vectors.map(vec => ({
-    ...vec,
-    score: cosineSimilarity(queryEmbedding, vec.embedding)
-  }));
-
-  // Sort descending by score
-  results.sort((a, b) => b.score - a.score);
-
-  // Return the closest matches, dropping the massive embedding array to save memory passing it around
-  return results.slice(0, topK).map(r => ({
-    id: r.id,
-    text: r.text,
-    metadata: r.metadata,
-    score: r.score
-  }));
-}
+// Lazy initialization keeps pure tests from touching the application's data files.
+let defaultStore;
+const current = () => defaultStore ??= createVectorStore({ filePath: path.join(dataDirectory(), 'vectors.json') });
+export const addMemory = (...args) => current().addMemory(...args);
+export const getVectorCount = (...args) => current().getVectorCount(...args);
+export const searchMemories = (...args) => current().searchMemories(...args);

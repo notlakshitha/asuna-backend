@@ -1,6 +1,7 @@
 import cron from 'node-cron';
 import { getHistory, addMagazine } from './store.js';
 import { generateSundayMagazine } from './ai.js';
+import { proactiveEnabled } from './config.js';
 
 // Bot URL for proactive triggers (WhatsApp bot API)
 const BOT_URL = process.env.BOT_URL || 'http://127.0.0.1:3847';
@@ -50,7 +51,7 @@ export function setupCronJobs() {
       
       // We process the top recent history elements
       const { extractAndEmbedMemories } = await import('./ai.js');
-      const added = await extractAndEmbedMemories(history, todayStr);
+      const added = await extractAndEmbedMemories(history, todayStr, 'default');
       console.log(`[CRON] Consolidated ${added} new embedded memories for ${todayStr}.`);
     } catch(e) {
       console.error('[CRON] Failed to consolidate memories:', e.message);
@@ -59,6 +60,7 @@ export function setupCronJobs() {
   
   // Proactive trigger check every 3 hours
   cron.schedule('0 */3 * * *', async () => {
+    if (!proactiveEnabled()) return;
     console.log('[CRON] Checking proactive trigger...');
     try {
       const history = getHistory('default');

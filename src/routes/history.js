@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { addHistory, getHistory } from '../store.js';
 import { answerFromHistory, extractAndEmbedMemories, answerFromSecondBrain } from '../ai.js';
 import { getVectorCount } from '../vectorStore.js';
+import { proactiveEnabled } from '../config.js';
 
 const BOT_URL = process.env.BOT_URL || 'http://127.0.0.1:3847';
 
@@ -31,7 +32,7 @@ historyRoutes.post('/history/sync', async (req, res) => {
   
   // Check for proactive triggers
   const trigger = detectProactiveTrigger(items);
-  if (trigger) {
+  if (trigger && proactiveEnabled()) {
     console.log(`[Proactive] Trigger detected: ${trigger.type}`);
     try {
       // Assuming whatsapp-bot runs on 3847 locally
@@ -60,12 +61,12 @@ historyRoutes.post('/history/query', async (req, res) => {
     if (!query) return res.status(400).json({ error: 'Query is required' });
 
     // Use Second Brain if we have memories, otherwise fallback to recent history
-    const vectorCount = getVectorCount();
+    const vectorCount = getVectorCount(userId);
     let answer;
     
     if (vectorCount > 0) {
        console.log(`[Second Brain] Searching ${vectorCount} embedded memories...`);
-       answer = await answerFromSecondBrain(query);
+       answer = await answerFromSecondBrain(query, userId);
     } else {
        console.log(`[Second Brain] Empty. Falling back to recent history search...`);
        const history = getHistory(userId);
@@ -93,9 +94,9 @@ historyRoutes.post('/history/consolidate', async (req, res) => {
     
     // We only embed the top X latest things since we don't have delta-tracking yet
     // In production, we'd flag items that have already been embedded.
-    const addedCount = await extractAndEmbedMemories(history, todayStr);
+    const addedCount = await extractAndEmbedMemories(history, todayStr, userId);
     
-    res.json({ success: true, added: addedCount, totalMemories: getVectorCount() });
+    res.json({ success: true, added: addedCount, totalMemories: getVectorCount(userId) });
   } catch(e) {
     res.status(500).json({ error: e.message });
   }
